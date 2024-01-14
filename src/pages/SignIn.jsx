@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
 import { Link } from "react-router-dom";
+import OAuth from "../components/OAuth";
 
 export default function SignIn() {
   const [formData, setformData] = useState({
@@ -62,16 +63,35 @@ export default function SignIn() {
               )}
             </div>
             <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
-              <p className="mb-6">Don't have an account? <Link to="/sign-up" className="text-red-500 hover:text-red-700 transition duration-200 ease-in-out ml-1">Register</Link></p>
-              <p><Link to="/forgot-password" className="text-blue-500 hover:text-blue-800 transition duration-200 ease-in-out ml-1">Forgot Password?</Link></p>
+              <p className="mb-6">
+                Don't have an account?{" "}
+                <Link
+                  to="/sign-up"
+                  className="text-red-500 hover:text-red-700 transition duration-200 ease-in-out ml-1"
+                >
+                  Register
+                </Link>
+              </p>
+              <p>
+                <Link
+                  to="/forgot-password"
+                  className="text-blue-500 hover:text-blue-800 transition duration-200 ease-in-out ml-1"
+                >
+                  Forgot Password?
+                </Link>
+              </p>
             </div>
-          </form>
-          <button className="w-full bg-blue-600 text-white py-3 px-7 text-sm font-medium uppercase rounded-md shadow-md hover:bg-blue-700 transition duration-200 ease-in-out hover:shadow-xl active:bg-blue-800" type="submit">
+            <button
+              className="w-full bg-blue-600 text-white py-3 px-7 text-sm font-medium uppercase rounded-md shadow-md hover:bg-blue-700 transition duration-200 ease-in-out hover:shadow-xl active:bg-blue-800"
+              type="submit"
+            >
               Sign in
-          </button>
-          <div className="flex my-4 items-center before:border-t before:flex-1 before:border-gray-300 after:border-t after:flex-1 after:border-gray-300">
-            <p className="text-center mx-4 font-semibold">OR</p>
-          </div>
+            </button>
+            <div className="flex my-4 items-center before:border-t before:flex-1 before:border-gray-300 after:border-t after:flex-1 after:border-gray-300">
+              <p className="text-center mx-4 font-semibold">OR</p>
+            </div>
+            <OAuth/>
+          </form>
         </div>
       </div>
     </section>
