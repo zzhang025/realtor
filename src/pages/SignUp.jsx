@@ -3,20 +3,24 @@ import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
 import { Link } from "react-router-dom";
 import OAuth from "../components/OAuth";
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import {db} from "../Firebase";
-import {doc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { db } from "../Firebase";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function SignUp() {
   const [formData, setformData] = useState({
-    name:"",
+    name: "",
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const {name, email, password } = formData;
+  const { name, email, password } = formData;
   const navigate = useNavigate();
   function onClick(e) {
     setformData((prevState) => ({
@@ -25,23 +29,30 @@ export default function SignUp() {
     }));
   }
 
-  async function onSubmit(e){
+  async function onSubmit(e) {
     e.preventDefault();
     try {
       const auth = getAuth();
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       updateProfile(auth.currentUser, {
-        displayName: name
+        displayName: name,
       });
       const user = userCredential.user;
-      const formDataCopy = {...formData};
+      const formDataCopy = { ...formData };
 
-      delete formDataCopy.password
+      delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp();
 
-      await setDoc(doc(db, "users", user.uid), formDataCopy)
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+      toast.success("Sign-up completed!")
       navigate("/");
-    } catch (error) { toast.error("Something went wrong with the registration")  }
+    } catch (error) {
+      toast.error("Something went wrong with the registration");
+    }
   }
   return (
     <section>
@@ -56,7 +67,7 @@ export default function SignUp() {
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
           <form onSubmit={onSubmit}>
-          <input
+            <input
               className="w-full px-4 py-2 text-xl text-gray-700 bg-white board-gray-300 rounded-md transition ease-in-out mb-6"
               type="text"
               id="name"
@@ -121,7 +132,7 @@ export default function SignUp() {
             <div className="flex my-4 items-center before:border-t before:flex-1 before:border-gray-300 after:border-t after:flex-1 after:border-gray-300">
               <p className="text-center mx-4 font-semibold">OR</p>
             </div>
-            <OAuth/>
+            <OAuth />
           </form>
         </div>
       </div>
