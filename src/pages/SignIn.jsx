@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
 
 export default function SignIn() {
   const [formData, setformData] = useState({
@@ -19,6 +21,20 @@ export default function SignIn() {
       [e.target.id]: e.target.value,
     }));
   }
+  const navigate = useNavigate();
+
+  async function onSubmit(e){
+    e.preventDefault()
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      if (userCredential.user) {
+        navigate("/")
+      }
+    } catch (error) {
+      toast.error("Bad user credentials!")
+    }
+  }
 
   return (
     <section>
@@ -32,7 +48,7 @@ export default function SignIn() {
           />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form>
+          <form onSubmit={onSubmit}>
             <input
               className="w-full px-4 py-2 text-xl text-gray-700 bg-white board-gray-300 rounded-md transition ease-in-out mb-6"
               type="email"
@@ -90,7 +106,7 @@ export default function SignIn() {
             <div className="flex my-4 items-center before:border-t before:flex-1 before:border-gray-300 after:border-t after:flex-1 after:border-gray-300">
               <p className="text-center mx-4 font-semibold">OR</p>
             </div>
-            <OAuth/>
+            <OAuth />
           </form>
         </div>
       </div>
