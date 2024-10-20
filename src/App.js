@@ -8,10 +8,9 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Offers from "./pages/Offers";
 import Header from "./components/Header";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import CreateListing from "./pages/CreateListing";
-
-
+import EditListing from "./pages/EditListing";
 
 function App() {
   return (
@@ -20,7 +19,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<PrivateRoute/>}>
+          <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/sign-in" element={<SignIn />} />
@@ -28,7 +27,10 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/offers" element={<Offers />} />
           <Route path="/Create-Listing" element={<PrivateRoute />}>
-          <Route path="/Create-Listing" element={<CreateListing />} />
+            <Route path="/Create-Listing" element={<CreateListing />} />
+          </Route>
+          <Route path="/Edit-Listing" element={<PrivateRoute />}>
+            <Route path="/Edit-Listing/:listingId" element={<EditListing />} />
           </Route>
         </Routes>
       </Router>
@@ -43,7 +45,7 @@ function App() {
         draggable
         pauseOnHover
         theme="dark"
-        />
+      />
     </>
   );
 }

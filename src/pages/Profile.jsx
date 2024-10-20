@@ -45,7 +45,7 @@ export default function Profile() {
     if (window.confirm("Are you sure you want to delete this listing?")) {
       await deleteDoc(doc(db, "listings", listingID));
       const updateListings = listings.filter(
-        (listing)=>listing.id !== listingID
+        (listing) => listing.id !== listingID
       );
       setListings(updateListings);
       toast.success("Your listing has been deleted.");
