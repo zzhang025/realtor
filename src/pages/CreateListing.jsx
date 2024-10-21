@@ -31,7 +31,7 @@ export default function CreateListing() {
     description: "",
     offer: false,
     regularPrice: 0,
-    discountPrice: 0,
+    discountedPrice: 0,
     latitude: 0,
     longitude: 0,
     images: {},
@@ -48,7 +48,7 @@ export default function CreateListing() {
     description,
     offer,
     regularPrice,
-    discountPrice,
+    discountedPrice,
     latitude,
     longitude,
     images,
@@ -81,7 +81,7 @@ export default function CreateListing() {
   async function onSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    if (+discountPrice >= +regularPrice) {
+    if (+discountedPrice >= +regularPrice) {
       setLoading(false);
       toast.error("Discounted Price needs to be lower than regular price.");
       return;
@@ -169,7 +169,7 @@ export default function CreateListing() {
     };
 
     delete formDataCopy.images;
-    !formDataCopy.offer && delete formDataCopy.discountPrice;
+    !formDataCopy.offer && delete formDataCopy.discountedPrice;
 
     const docRef = await addDoc(collection(db, "listings"), formDataCopy);
     setLoading(false);
@@ -430,8 +430,8 @@ export default function CreateListing() {
                border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700
                 focus:bg-white focus:border-slate-600 text-center"
                   type="number"
-                  id="discountPrice"
-                  value={discountPrice}
+                  id="discountedPrice"
+                  value={discountedPrice}
                   onChange={onChange}
                   min={50}
                   max={999999999}

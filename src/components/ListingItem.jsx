@@ -44,13 +44,13 @@ export default function ListingItem({ listing, id, onEdit, onDelete }) {
           <div className="flex items-center mt-[10px] space-x-3">
             <div className="flex items-center space-x-1">
               <p className="font-bold text-xs">
-                {listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : "1 Bed"}{" "}
+                {listing.bedroom > 1 ? `${listing.bedroom} Beds` : "1 Bed"}{" "}
               </p>
             </div>
             <div>
               <p className="font-bold text-xs">
-                {listing.bathrooms > 1
-                  ? `${listing.bathrooms} Baths`
+                {listing.bathroom > 1
+                  ? `${listing.bathroom} Baths`
                   : "1 Bath"}
               </p>
             </div>

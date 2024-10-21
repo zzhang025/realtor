@@ -7,7 +7,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade, Autoplay, Navigation, Pagination } from "swiper/modules";
 import SwiperCore from "swiper";
 import "swiper/css/bundle";
-import { FaShare } from "react-icons/fa";
+import {
+  FaShare,
+  FaMapMarkerAlt,
+  FaBed,
+  FaBath,
+  FaParking,
+  FaChair,
+} from "react-icons/fa";
 
 export default function Listing() {
   const params = useParams();
@@ -64,16 +71,83 @@ export default function Listing() {
           navigator.clipboard.writeText(window.location.href);
           setShareLinkCopied(true);
           setTimeout(() => {
-            setShareLinkCopied(false)
+            setShareLinkCopied(false);
           }, 2000);
         }}
       >
         <FaShare className="text-lg text-slate-500"></FaShare>
       </div>
-      {shareLinkCopied && 
-        <p className="fixed top-[17%] right-[5%] font-semibold border-2 border-gray-400
-        rounded-md bg-white z-10">Link copied!</p>
-      }
+      {shareLinkCopied && (
+        <p
+          className="fixed top-[17%] right-[5%] font-semibold border-2 border-gray-400
+        rounded-md bg-white z-10"
+        >
+          Link copied!
+        </p>
+      )}
+
+      <div
+        className="flex flex-col md:flex-row max-w-6xl lg:mx-auto m-4 p-4 rounded-lg shadow-lg bg-white
+      lg:space-x-5"
+      >
+        <div className="w-full h-[200px] lg=[400px]">
+          <p className="text-2xl font-bold mb-3 text-blue-800">
+            {listing.name} - $
+            {listing.offer && listing.discountedPrice !== undefined
+              ? listing.discountedPrice
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              : listing.regularPrice
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {listing.type === "rent" ? " / month" : ""}
+          </p>
+          <p className="flex items-center mt-3 mb-3 font-semibold">
+            <FaMapMarkerAlt className="text-green-600 mr-1"></FaMapMarkerAlt>{" "}
+            {listing.address}
+          </p>
+          <div className="flex justify-start items-center space-x-4 w-[75%]">
+            <p
+              className="bg-red-800 w-full max-w-[200px] rounded-md p-1 text-white text-center
+            font-semibold shadow-md"
+            >
+              {listing.type === "rent" ? "Rent" : "Sale"}
+            </p>
+            {listing.offer && (
+              <p
+                className="w-full max-w-[200px] bg-green-800 rounded-md p-1 text-white text-center
+            font-semibold shadow-md"
+              >
+                ${+listing.regularPrice - +listing.discountedPrice} discount
+              </p>
+            )}
+          </div>
+          <p className="mt-3 mb-3">
+            <span className="font-semibold">
+              Description - {listing.description}
+            </span>
+          </p>
+          <ul className="flex items-center space-x-2 lg:space-x-10 text-sm font-semibold">
+            <li className="flex items-center whitespace-nowrap">
+              <FaBed className="" />
+              {+listing.bedroom > 1 ? `${listing.bedroom} Beds` : `1 Bed`}
+            </li>
+            <li className="flex items-center whitespace-nowrap">
+              <FaBath className="" />
+              {+listing.bathroom > 1 ? `${listing.bathroom} Baths` : `1 Bath`}
+            </li>
+            <li className="flex items-center whitespace-nowrap">
+              <FaParking className="" />
+              {+listing.parking ? "Parking" : `No Parking`}
+            </li>
+            <li className="flex items-center whitespace-nowrap">
+              <FaChair className="" />
+              {+listing.furnished ? "Furnished" : `No Furnished`}
+            </li>
+          </ul>
+        </div>
+        <div className="bg-blue-300 w-full h-[200px] lg=[400px] z-10 overflow-x-hidden"></div>
+      </div>
     </main>
   );
 }
