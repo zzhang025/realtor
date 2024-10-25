@@ -17,6 +17,7 @@ import {
   FaChair,
 } from "react-icons/fa";
 import Contact from "../components/Contact";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 export default function Listing() {
   const auth = getAuth();
@@ -28,18 +29,18 @@ export default function Listing() {
 
   SwiperCore.use([Autoplay, Navigation, Pagination]);
 
-useEffect(() => {
+  useEffect(() => {
     async function fetchListing() {
-        const docRef = doc(db, "listings", params.listingId);
-        const docSnap = await getDoc(docRef);
+      const docRef = doc(db, "listings", params.listingId);
+      const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
-            setListing(docSnap.data());
-            setLoading(false);
-        }
+      if (docSnap.exists()) {
+        setListing(docSnap.data());
+        setLoading(false);
+      }
     }
     fetchListing();
-}, [params.listingId]);
+  }, [params.listingId]);
 
   if (loading) {
     return <Spinner></Spinner>;
@@ -150,9 +151,10 @@ useEffect(() => {
           </ul>
           {listing.userRef === auth.currentUser?.uid && !contactLandlord && (
             <div className="mt-6">
-              <button onClick={() => {
-                setContactLandlord(true);
-              }}
+              <button
+                onClick={() => {
+                  setContactLandlord(true);
+                }}
                 className="px-7 py-3 bg-blue-600 text-white font-medium text-sm
                uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700
                focus:shadow-lg w-full text-center transition duration-150 ease-in-out"
@@ -165,7 +167,20 @@ useEffect(() => {
             <Contact userRef={listing.userRef} listing={listing}></Contact>
           )}
         </div>
-        <div className="bg-blue-300 w-full h-[200px] lg=[400px] z-10 overflow-x-hidden"></div>
+        <div className="w-full h-[200px] md:h-[400px] z-10 overflow-x-hidden mt-6 md:mt-0 md:ml-2">
+          <MapContainer center={[listing.geolocation.latitude, listing.geolocation.longitude]} zoom={10} scrollWheelZoom={false}
+          style={{height:"100%", width:"100%"}}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={[listing.geolocation.latitude, listing.geolocation.longitude]}>
+              <Popup>
+                A pretty CSS3 popup. <br /> Easily customizable.
+              </Popup>
+            </Marker>
+          </MapContainer>
+        </div>
       </div>
     </main>
   );
