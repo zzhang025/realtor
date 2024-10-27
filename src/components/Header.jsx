@@ -29,7 +29,7 @@ export default function Header() {
           <img
             src="https://www.realtor.ca/images/logo.svg"
             alt="logo"
-            className="h-9 cursor-pointer"
+            className="h-9 cursor-pointer rounded-md"
             onClick={()=>navigate("/")}
           />
         </div>
