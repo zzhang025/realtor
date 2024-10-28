@@ -30,7 +30,7 @@ export default function Header() {
             src="https://www.realtor.ca/images/logo.svg"
             alt="logo"
             className="h-9 cursor-pointer rounded-md"
-            onClick={()=>navigate("/")}
+            onClick={()=>navigate("/home")}
           />
         </div>
         <div>
