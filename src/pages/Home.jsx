@@ -9,10 +9,7 @@ import {
   getDocs,
   where,
 } from "firebase/firestore";
-import Spinner from "../components/Spinner";
-import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import Listing from "./Listing";
 import ListingItem from "../components/ListingItem";
 
 export default function Home() {
